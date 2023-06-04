@@ -1,9 +1,7 @@
 ---
 
-- name: Example task to deploy a template
-  ansible.builtin.template:
-    src: 'potos.example.j2'
-    dest: '/potos.example'
-    owner: root
-    group: root
-    mode: '0755'
+- name: Allow calling /lib/systemd/systemd-sleep for all users
+  ansible.builtin.copy:
+    src: "etc/sudoers.d/potos_hibernate"
+    dest: "/etc/sudoers.d/potos_hibernate"
+    mode: '0640'
