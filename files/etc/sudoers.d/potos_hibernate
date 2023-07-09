@@ -1,0 +1,3 @@
+ALL     ALL=(root) NOPASSWD: /lib/systemd/systemd-sleep suspend
+ALL     ALL=(root) NOPASSWD: /lib/systemd/systemd-sleep hibernate
+ALL     ALL=(root) NOPASSWD: /lib/systemd/systemd-sleep suspend-then-hibernate

@@ -1,9 +1,25 @@
 ---
 
-- name: Example task to deploy a template
-  ansible.builtin.template:
-    src: 'potos.example.j2'
-    dest: '/potos.example'
-    owner: root
-    group: root
+- name: Allow calling /lib/systemd/systemd-sleep for all users
+  ansible.builtin.copy:
+    src: "etc/sudoers.d/potos_hibernate"
+    dest: "/etc/sudoers.d/potos_hibernate"
+    mode: '0640'
+
+- name: Ensure login.conf.d exists
+  ansible.builtin.file:
+    path: /etc/systemd/logind.conf.d
+    state: directory
     mode: '0755'
+
+- name: overwrite lid actions
+  ansible.builtin.copy:
+    src: "etc/systemd/logind.conf.d/lidhibernate.conf"
+    dest: "/etc/systemd/logind.conf.d/lidhibernate.conf"
+    mode: '0644'
+
+- name: remove broken suspend from gnome menu
+  ansible.builtin.copy:
+    src: "etc/polkit-1/localauthority/50-local.d/20-remove-suspend-from-menu.pkla"
+    dest: "/etc/polkit-1/localauthority/50-local.d/20-remove-suspend-from-menu.pkla"
+    mode: '0644'
