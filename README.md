@@ -11,7 +11,7 @@ reliably on my Notebook with an AMD GPU. The core finding on my hardware:
 
 * suspend / hibernate does not work when called from Gnome or
   e.g. with `systemctl suspend`: The first wake up can succeed,
-  but the second wake up ends in power cycling.
+  but the second wake up always ends in power cycling.
 
 * however, all works perfectly when called as root as follows: `/lib/systemd/systemd-sleep suspend`
 
@@ -20,9 +20,19 @@ that closing the lid causes the system to hibernate, irrelevant whether the syst
 battery power, externaly powered or docked.
 
 * a `sudo` rule to enable calling `systemd-sleep` as non privileged user.
-* a `logindenable calling `systemd-sleep` as non privileged user.
 * a `logind` configuration that causes a hibernation on any lid close.
 * a `polkit` file prohibiting Gnome to call suspend (as this would be unwakable again).
+
+Please note: Hibernation needs to know where to store the memory contents
+on disk (and where to wake up from). This works "automagically" when
+
+* you have a swap partition that is at least as big as your memory size.
+* `update-initrd -u -k all` is called when that swap partition is active. This
+  should be added to the `potos_firstboot_postcommands` in your specs
+  repo, e.g. like [this](https://github.com/nis65/ansible-specs-potos-mlc/blob/292fd283b899bc65898faaadee071a5e6db3119f/vars/potos_firstboot.yml#L3).
+
+The easiest way to make use of this implementation is via
+an [argos shell extension](https://github.com/nis65/ansible-role-potos_argos/blob/01b6961db64b4b97b54390cd344f9044c344e100/files/usr/local/src/potos_argos/mgmt#L6).
 
 ## Example Playbook
 
