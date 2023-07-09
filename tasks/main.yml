@@ -17,3 +17,9 @@
     src: "etc/systemd/logind.conf.d/lidhibernate.conf"
     dest: "/etc/systemd/logind.conf.d/lidhibernate.conf"
     mode: '0644'
+
+- name: remove broken suspend from gnome menu
+  ansible.builtin.copy:
+    src: "etc/polkit-1/localauthority/50-local.d/20-remove-suspend-from-menu.pkla"
+    dest: "/etc/polkit-1/localauthority/50-local.d/20-remove-suspend-from-menu.pkla"
+    mode: '0644'

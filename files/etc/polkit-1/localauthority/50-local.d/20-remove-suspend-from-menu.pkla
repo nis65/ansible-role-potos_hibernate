@@ -1,0 +1,6 @@
+[Disable suspend]
+Identity=unix-group:*
+Action=org.freedesktop.login1.suspend;org.freedesktop.login1.suspend-multiple-sessions
+ResultAny=no
+ResultInactive=no
+ResultActive=no
