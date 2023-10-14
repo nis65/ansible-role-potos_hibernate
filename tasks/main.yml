@@ -23,3 +23,9 @@
     src: "etc/polkit-1/localauthority/50-local.d/20-remove-suspend-from-menu.pkla"
     dest: "/etc/polkit-1/localauthority/50-local.d/20-remove-suspend-from-menu.pkla"
     mode: '0644'
+
+- name: Disable conflicting systemd-networkd
+  ansible.builtin.systemd:
+    name: systemd-networkd
+    state: stopped
+    enabled: false
